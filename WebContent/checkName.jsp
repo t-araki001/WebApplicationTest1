@@ -19,7 +19,6 @@ h1 {
 request.setCharacterEncoding("UTF-8");
 String FIRST_NAME = request.getParameter("FIRST_NAME");
 String LAST_NAME = request.getParameter("LAST_NAME");
-String msg = null;
 %>
 	<h1>登録内容確認</h1>
 	<h2>以下の内容で登録します</h2>

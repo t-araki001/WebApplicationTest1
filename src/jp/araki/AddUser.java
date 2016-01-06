@@ -29,23 +29,28 @@ public class AddUser extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String FIRST_NAME = request.getParameter("FIRST_NAME");
 		String LAST_NAME = request.getParameter("LAST_NAME");
-		try{
+		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection users = DriverManager.getConnection(
 					"jdbc:mysql://localhost/webtest1", "root", "keyport01");
 			Statement state = users.createStatement();
-			try{
-				int res = state.executeUpdate("insert into user set FIRST_NAME=\"" + FIRST_NAME + "\", LAST_NAME=\"" + LAST_NAME + "\"");
-			}catch(Exception ex){
+			try {
+				state.executeUpdate("insert into user set FIRST_NAME=\""
+						+ FIRST_NAME + "\", LAST_NAME=\"" + LAST_NAME + "\"");
+			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 			state.close();
-		}catch(ClassNotFoundException e){
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}catch(SQLException e){
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		responce.sendRedirect("showName.jsp");
+		request.setAttribute("FIRST_NAME", FIRST_NAME);
+		request.setAttribute("LAST_NAME", LAST_NAME);
+		getServletConfig().getServletContext()
+				.getRequestDispatcher("/finishName.jsp")
+				.forward(request, responce);
 
 	}
 }

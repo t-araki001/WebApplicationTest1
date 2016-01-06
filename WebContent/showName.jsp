@@ -13,7 +13,8 @@
 	while (result.next()) {
 		String FIRST_NAME = result.getString("FIRST_NAME");
 		String LAST_NAME = result.getString("LAST_NAME");
-		html += "<tr><td>" + FIRST_NAME + " " + LAST_NAME + "</td> <td>さま</td>" + "</tr>";
+		html += "<tr><td>" + FIRST_NAME + " " + LAST_NAME
+				+ "</td> <td>さま</td>" + "</tr>";
 	}
 	html += "</table>";
 	result.close();
@@ -25,6 +26,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>DataBase List</title>
+
 <style>
 h1 {
 	font size: 10t;
@@ -38,10 +40,12 @@ h1 {
 	<h1>データベースアクセステスト</h1>
 	<h2>ようこそ！！</h2>
 	<%=html%>
+
+	<p>※ユーザ追加を行う場合は<a href = setName.jsp>こちら</a></p>
 	<hr>
 
-	<h2>ユーザ追加</h2>
-	<form action="checkName.jsp" method="POST">
+	<h2>ユーザ追加(仮)</h2>
+	<form action="checkName.jsp" method="POST" onsubmit="return check();">
 		<table>
 			<tr>
 				<td>名字：</td>
@@ -72,6 +76,9 @@ h1 {
 			</tr>
 		</table>
 	</form>
+
+
+
 
 </body>
 </html>

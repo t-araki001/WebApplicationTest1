@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/DelUser")
-public class DelUser extends HttpServlet {
+@WebServlet("/SearchUser")
+public class SearchUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public DelUser() {
+	public SearchUser() {
 		super();
 	}
 
@@ -28,20 +28,29 @@ public class DelUser extends HttpServlet {
 			HttpServletResponse responce) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String FIRST_NAME = request.getParameter("FIRST_NAME");
-
-		try{
+		String LAST_NAME = request.getParameter("LAST_NAME");
+		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection users = DriverManager.getConnection(
 					"jdbc:mysql://localhost/webtest1", "root", "keyport01");
 			Statement state = users.createStatement();
-			state.executeUpdate("delete from user where FIRST_NAME=\"" + FIRST_NAME + "\"");
+			try {
+				state.executeUpdate("insert into user set FIRST_NAME=\""
+						+ FIRST_NAME + "\", LAST_NAME=\"" + LAST_NAME + "\"");
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 			state.close();
-		}catch(ClassNotFoundException e){
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}catch(SQLException e){
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		responce.sendRedirect("showName.jsp");
+		request.setAttribute("FIRST_NAME", FIRST_NAME);
+		request.setAttribute("LAST_NAME", LAST_NAME);
+		getServletConfig().getServletContext()
+				.getRequestDispatcher("/finishName.jsp")
+				.forward(request, responce);
 
 	}
 }
