@@ -28,14 +28,13 @@ public class DelUser extends HttpServlet {
 			HttpServletResponse responce) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String FIRST_NAME = request.getParameter("FIRST_NAME");
-		String END_NAME = request.getParameter("END_NAME");
 
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection users = DriverManager.getConnection(
-					"jdbc:mysql://localhost/webtest1", "root", "primrose0");
+					"jdbc:mysql://localhost/webtest1", "root", "keyport01");
 			Statement state = users.createStatement();
-			int res = state.executeUpdate("delete from user where FIRST_NAME=\"" + FIRST_NAME + "\"AND END_NAME=\"" + END_NAME +"\"");
+			int res = state.executeUpdate("delete from user where FIRST_NAME=\"" + FIRST_NAME + "\"");
 			state.close();
 		}catch(ClassNotFoundException e){
 			e.printStackTrace();

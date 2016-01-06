@@ -32,7 +32,7 @@ public class AddUser extends HttpServlet {
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection users = DriverManager.getConnection(
-					"jdbc:mysql://localhost/webtest1", "root", "primrose0");
+					"jdbc:mysql://localhost/webtest1", "root", "keyport01");
 			Statement state = users.createStatement();
 			try{
 				int res = state.executeUpdate("insert into user set FIRST_NAME=\"" + FIRST_NAME + "\", LAST_NAME=\"" + LAST_NAME + "\"");

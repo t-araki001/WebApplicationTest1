@@ -5,15 +5,15 @@
 <%
 	Class.forName("com.mysql.jdbc.Driver");
 	Connection users = DriverManager.getConnection(
-			"jdbc:mysql://localhost/webtest1", "root", "primrose0");
+			"jdbc:mysql://localhost/webtest1", "root", "keyport01");
 	Statement state = users.createStatement();
 	ResultSet result = state.executeQuery("select * from user");
-	String html = "<table width=500>";
+	String html = "<table width=0>";
 
 	while (result.next()) {
 		String FIRST_NAME = result.getString("FIRST_NAME");
 		String LAST_NAME = result.getString("LAST_NAME");
-		html += "<tr nowrap>" + FIRST_NAME + LAST_NAME + "さま" + "</tr>";
+		html += "<tr><td>" + FIRST_NAME + " " + LAST_NAME + "</td> <td>さま</td>" + "</tr>";
 	}
 	html += "</table>";
 	result.close();
@@ -41,34 +41,30 @@ h1 {
 	<hr>
 
 	<h2>ユーザ追加</h2>
-	<form action="./AddUser" method="POST">
+	<form action="checkName.jsp" method="POST">
 		<table>
 			<tr>
-				<td>FIRST_NAME</td>
+				<td>名字：</td>
 				<td><input type="text" name=FIRST_NAME></td>
 			</tr>
 			<tr>
-				<td>END_NAME</td>
+				<td>名前：</td>
 				<td><input type="text" name="LAST_NAME"></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="submit" value="送信"></td>
+				<td><input type="submit" value="登録"></td>
 			</tr>
 		</table>
 	</form>
 	<hr>
 
-	<h2>ユーザ削除(未完成)</h2>
+	<h2>ユーザ削除(掃除用。名字判定のみ)</h2>
 	<form action="./DelUser" method="POST">
 		<table>
 			<tr>
-				<td>FIRST_NAME</td>
+				<td>名字：</td>
 				<td><input type="text" name="FIRST_NAME"></td>
-			</tr>
-						<tr>
-				<td>END_NAME</td>
-				<td><input type="text" name="LAST_NAME"></td>
 			</tr>
 			<tr>
 				<td></td>
