@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 
-<%@ page import="java.sql.*"%>
+<%@ page import="java.sql.*, jp.araki.ShowName"%>
 <%
-	Class.forName("com.mysql.jdbc.Driver");
-	Connection users = DriverManager.getConnection(
-			"jdbc:mysql://localhost/webtest1", "root", "keyport01");
-	Statement state = users.createStatement();
-	ResultSet result = state.executeQuery("select * from user");
-	String html = "<table width=0>";
 
+ShowName db = new ShowName();
+
+	db.open();
+
+	ResultSet result = db.getResultSet("select * from user");
+
+	String html = "<table width=0>";
 	while (result.next()) {
 		String FIRST_NAME = result.getString("FIRST_NAME");
 		String LAST_NAME = result.getString("LAST_NAME");
@@ -17,9 +18,8 @@
 				+ "</td> <td>さま</td>" + "</tr>";
 	}
 	html += "</table>";
-	result.close();
-	state.close();
-	users.close();
+
+	db.close();
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

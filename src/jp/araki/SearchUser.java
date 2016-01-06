@@ -27,16 +27,15 @@ public class SearchUser extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse responce) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String FIRST_NAME = request.getParameter("FIRST_NAME");
-		String LAST_NAME = request.getParameter("LAST_NAME");
+		String Search_NAME = request.getParameter("Search_NAME");
+
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection users = DriverManager.getConnection(
 					"jdbc:mysql://localhost/webtest1", "root", "keyport01");
 			Statement state = users.createStatement();
 			try {
-				state.executeUpdate("insert into user set FIRST_NAME=\""
-						+ FIRST_NAME + "\", LAST_NAME=\"" + LAST_NAME + "\"");
+				state.executeUpdate("SELECT * FROM user WHERE (CONVERT(`FIRST_NAME` USING utf8) LIKE '%Search_NAME%' OR CONVERT(`LAST_NAME` USING utf8) LIKE Search_NAME");
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -46,8 +45,7 @@ public class SearchUser extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		request.setAttribute("FIRST_NAME", FIRST_NAME);
-		request.setAttribute("LAST_NAME", LAST_NAME);
+		request.setAttribute("Search_NAME", Search_NAME);
 		getServletConfig().getServletContext()
 				.getRequestDispatcher("/finishName.jsp")
 				.forward(request, responce);

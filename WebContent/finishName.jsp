@@ -15,10 +15,6 @@ h1 {
 </style>
 </head>
 <body>
-<%
-//request.setCharacterEncoding("UTF-8");
-
-%>
 
 	<h1>登録完了</h1>
 	<p><%=request.getAttribute("FIRST_NAME") %> <%=request.getAttribute("LAST_NAME") %>さんの登録が完了しました！</p>
