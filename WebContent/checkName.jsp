@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ page import="jp.araki.MyDBAccess"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,6 +20,12 @@ h1 {
 request.setCharacterEncoding("UTF-8");
 String FIRST_NAME = request.getParameter("FIRST_NAME");
 String LAST_NAME = request.getParameter("LAST_NAME");
+
+//サニタイジング
+MyDBAccess db = new MyDBAccess();
+FIRST_NAME = db.escapeXSS(FIRST_NAME);
+LAST_NAME = db.escapeXSS(LAST_NAME);
+
 %>
 	<h1>登録内容確認</h1>
 	<h2>以下の内容で登録します</h2>
@@ -31,11 +38,13 @@ String LAST_NAME = request.getParameter("LAST_NAME");
 			<tr>
 				<td>名前：<%=LAST_NAME %></td>
 				<td><input type="hidden" name="LAST_NAME" value=<%=LAST_NAME %>></td>
+				<td><input type="hidden" name="token" value="<%=session.getAttribute("token") %>"></td>
 			</tr>
 			<tr>
 				<td></td>
 				<td><input type="submit" value="登録"></td>
 				<td><INPUT type="button" value="中止" onClick="history.back()">
+
 			</tr>
 		</table>
 	</form>

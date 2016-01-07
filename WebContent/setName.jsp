@@ -17,7 +17,7 @@ h1 {
 <body>
 	<h1>ユーザ登録</h1>
 	<h2>登録したい名字、名前をそれぞれ入力</h2>
-	<form action="checkName.jsp" method="POST" onsubmit="return check(this);">
+	<form action="./CheckName" method="POST" onsubmit="return check(this);">
 		<table>
 			<tr>
 				<td>名字：</td>

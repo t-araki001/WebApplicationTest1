@@ -9,43 +9,35 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/SearchUser")
-public class SearchUser extends HttpServlet {
+@WebServlet("/DelAll")
+public class DelAll extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public SearchUser() {
+	public DelAll() {
 		super();
 	}
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse responce) throws ServletException, IOException {
 	}
-//今は経由のみ
+
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse responce) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		try{
+				MyDBAccess db = new MyDBAccess();
+				db.open();
+				db.getResultSet("delete from user");
+				db.close();
 
-		try {
-			String Search_NAME = request.getParameter("NAME");
-
-			MyDBAccess db = new MyDBAccess();
-			db.open();
-			db.getResultSet("SELECT * FROM user WHERE FIRST_NAME=\"" + Search_NAME + "\"OR LAST_NAME=\"" + Search_NAME + "\"");
-			db.close();
-			request.setAttribute("Search_NAME", Search_NAME);
-
-		} catch (ClassNotFoundException e) {
+		}catch(ClassNotFoundException e){
 			e.printStackTrace();
-		} catch (SQLException e) {
+		}catch(SQLException e){
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-
-		getServletConfig().getServletContext()
-				.getRequestDispatcher("/finishSearch.jsp")
-				.forward(request, responce);
+		responce.sendRedirect("showName.jsp");
 
 	}
 }

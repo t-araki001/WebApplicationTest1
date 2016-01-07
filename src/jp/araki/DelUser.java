@@ -1,10 +1,7 @@
 package jp.araki;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,15 +27,17 @@ public class DelUser extends HttpServlet {
 		String FIRST_NAME = request.getParameter("FIRST_NAME");
 
 		try{
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection users = DriverManager.getConnection(
-					"jdbc:mysql://localhost/webtest1", "root", "keyport01");
-			Statement state = users.createStatement();
-			state.executeUpdate("delete from user where FIRST_NAME=\"" + FIRST_NAME + "\"");
-			state.close();
+				MyDBAccess db = new MyDBAccess();
+				db.open();
+				FIRST_NAME = db.escapeXSS(FIRST_NAME);
+				db.getResultSet("delete from user where FIRST_NAME=\"" + FIRST_NAME + "\"");
+				db.close();
+
 		}catch(ClassNotFoundException e){
 			e.printStackTrace();
 		}catch(SQLException e){
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		responce.sendRedirect("showName.jsp");
