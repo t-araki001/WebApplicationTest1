@@ -1,17 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 
-<%@ page import="java.sql.*,jp.araki.MyDBAccess"%>
+<%@ page import="java.sql.*,jp.araki.MyDBAccess,jp.araki.Escape"%>
 <%
 	MyDBAccess db = new MyDBAccess();
+	Escape xss = new Escape();
 	db.open();
 	ResultSet result = db.getResultSet("select * from user");
 	String html = "<table width=0>";
 	while (result.next()) {
 		String FIRST_NAME = result.getString("FIRST_NAME");
 		String LAST_NAME = result.getString("LAST_NAME");
-		FIRST_NAME = db.escapeXSS(FIRST_NAME);
-		LAST_NAME = db.escapeXSS(LAST_NAME);
+		FIRST_NAME = xss.escapeXSS(FIRST_NAME);
+		LAST_NAME = xss.escapeXSS(LAST_NAME);
 
 		html += "<tr><td>" + FIRST_NAME + " " + LAST_NAME
 		+ "</td> <td>さま</td>" + "</tr>";

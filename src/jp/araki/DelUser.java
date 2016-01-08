@@ -28,9 +28,10 @@ public class DelUser extends HttpServlet {
 
 		try{
 				MyDBAccess db = new MyDBAccess();
+				Escape xss = new Escape();
 				db.open();
-				FIRST_NAME = db.escapeXSS(FIRST_NAME);
-				db.getResultSet("delete from user where FIRST_NAME=\"" + FIRST_NAME + "\"");
+				FIRST_NAME = xss.escapeXSS(FIRST_NAME);
+				db.getResultSetDel(FIRST_NAME);
 				db.close();
 
 		}catch(ClassNotFoundException e){

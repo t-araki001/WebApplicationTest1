@@ -1,21 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ page import="java.sql.*,jp.araki.MyDBAccess"%>
+<%@ page import="java.sql.*,jp.araki.MyDBAccess,jp.araki.Escape"%>
 
 <%
 
 	MyDBAccess db = new MyDBAccess();
+	Escape xss = new Escape();
+
 	String Search_NAME = request.getParameter("NAME");
-	Search_NAME = db.escapeXSS(Search_NAME);
+	String key = request.getParameter("key");
+	Search_NAME = xss.escapeXSS(Search_NAME);
+
 	db.open();
-	ResultSet result = db.getResultSet("SELECT * FROM user WHERE FIRST_NAME=\"" + Search_NAME + "\"OR LAST_NAME=\"" + Search_NAME + "\"");
+	//SQL実施
+	ResultSet result = db.getResultSetSearch(Search_NAME,key);
 	int count=0;
+
 	String html = "<table width=0>";
 	while (result.next()) {
 		String FIRST_NAME = result.getString("FIRST_NAME");
 		String LAST_NAME = result.getString("LAST_NAME");
-		FIRST_NAME = db.escapeXSS(FIRST_NAME);
-		LAST_NAME = db.escapeXSS(LAST_NAME);
+		FIRST_NAME = xss.escapeXSS(FIRST_NAME);
+		LAST_NAME  = xss.escapeXSS(LAST_NAME);
 
 		html += "<tr><td>" + FIRST_NAME + " " + LAST_NAME + "</td>" + "</tr>";
 		count++;
@@ -48,5 +54,19 @@ h1 {
 	<p>
 		<a href=showName.jsp>Topに戻る</a>
 	</p>
+	<hr>
+	<p>ここで検索も可能</p>
+		<form action="./SearchUser" method="POST">
+				<p>
+		<input type="radio" name="key" value="1" checked>名字or名前
+		<input type="radio" name="key" value="2" >名字
+		<input type="radio" name="key" value="3"  >名前
+		</p>
+		<table>
+			<tr>
+				<td><input type="text" name=NAME><input type="submit" value="検索"></td>
+			</tr>
+		</table>
+	</form>
 </body>
 </html>

@@ -40,10 +40,10 @@ public class AddUser extends HttpServlet {
 
 				MyDBAccess db = new MyDBAccess();
 				db.open();
-				db.getResultSet("insert into user set FIRST_NAME=\""
-						+ FIRST_NAME + "\", LAST_NAME=\"" + LAST_NAME + "\"");
+				//INSERTのSQL文実施
+				db.getResultSetAdd(FIRST_NAME,LAST_NAME);
 				db.close();
-
+				// 完了画面に登録者を受け渡し
 				request.setAttribute("FIRST_NAME", FIRST_NAME);
 				request.setAttribute("LAST_NAME", LAST_NAME);
 
@@ -54,7 +54,6 @@ public class AddUser extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			// 完了画面に登録者を受け渡し
 
 			getServletConfig().getServletContext()
 					.getRequestDispatcher("/finishName.jsp")

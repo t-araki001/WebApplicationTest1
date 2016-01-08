@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ page import="jp.araki.MyDBAccess"%>
+<%@ page import="java.sql.*,jp.araki.Escape"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,9 +22,9 @@ String FIRST_NAME = request.getParameter("FIRST_NAME");
 String LAST_NAME = request.getParameter("LAST_NAME");
 
 //サニタイジング
-MyDBAccess db = new MyDBAccess();
-FIRST_NAME = db.escapeXSS(FIRST_NAME);
-LAST_NAME = db.escapeXSS(LAST_NAME);
+Escape xss = new Escape();
+FIRST_NAME = xss.escapeXSS(FIRST_NAME);
+LAST_NAME = xss.escapeXSS(LAST_NAME);
 
 %>
 	<h1>登録内容確認</h1>
