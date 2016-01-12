@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -15,7 +16,17 @@ h1 {
 </style>
 </head>
 <body>
+<%
+request.setCharacterEncoding("utf-8");
+String login = (String)session.getAttribute("login");
+String mes = null;
+	if (login != null && login.equals("OK")){
+  mes = "ようこそ";
+}
+%>
+
 	<h1>ユーザ登録</h1>
+	<p><%=mes %></p>
 	<h2>登録したい名字、名前をそれぞれ入力</h2>
 	<form action="./CheckName" method="POST" onsubmit="return check(this);">
 		<table>

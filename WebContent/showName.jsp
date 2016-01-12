@@ -40,7 +40,7 @@ h1 {
 	<h2>ようこそ！！</h2>
 	<%=html%>
 
-	<p>※ユーザ追加を行う場合は<a href = setName.jsp>こちら</a></p>
+	<p>※ユーザ追加を行う場合は<a href = login.jsp>こちら</a></p>
 	<p>※ユーザ検索を行う場合は<a href = searchName.jsp>こちら</a></p>
 	<hr>
 

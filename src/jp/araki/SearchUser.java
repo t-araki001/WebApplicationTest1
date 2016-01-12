@@ -18,11 +18,11 @@ public class SearchUser extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request,
-			HttpServletResponse responce) throws ServletException, IOException {
+			HttpServletResponse response) throws ServletException, IOException {
 	}
 //今は経由のみ
 	protected void doPost(HttpServletRequest request,
-			HttpServletResponse responce) throws ServletException, IOException {
+			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 
 		HttpSession session = request.getSession(true);
@@ -31,7 +31,7 @@ public class SearchUser extends HttpServlet {
 
 		getServletConfig().getServletContext()
 				.getRequestDispatcher("/finishSearch.jsp")
-				.forward(request, responce);
+				.forward(request, response);
 
 	}
 }

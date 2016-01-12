@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet("/CheckName")
 public class CheckName extends HttpServlet {
-	protected void doPost(HttpServletRequest request, HttpServletResponse responce)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 
@@ -21,7 +21,7 @@ public class CheckName extends HttpServlet {
 
 		getServletConfig().getServletContext()
 		.getRequestDispatcher("/checkName.jsp")
-		.forward(request, responce);
+		.forward(request, response);
 
 	}
 }

@@ -19,11 +19,11 @@ public class AddUser extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request,
-			HttpServletResponse responce) throws ServletException, IOException {
+			HttpServletResponse response) throws ServletException, IOException {
 	}
 
 	protected void doPost(HttpServletRequest request,
-			HttpServletResponse responce) throws ServletException, IOException {
+			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 
 		// トークンチェック(CSRF)
@@ -31,7 +31,7 @@ public class AddUser extends HttpServlet {
 		String token = (String) session.getAttribute("token");
 		if (token == null || !(token.equals(request.getParameter("token")))) {
 			// エラー画面へ
-			responce.sendRedirect("error.jsp");
+			response.sendRedirect("error.jsp");
 		} else {
 			// DB登録
 			try {
@@ -57,7 +57,7 @@ public class AddUser extends HttpServlet {
 
 			getServletConfig().getServletContext()
 					.getRequestDispatcher("/finishName.jsp")
-					.forward(request, responce);
+					.forward(request, response);
 
 		}
 	}

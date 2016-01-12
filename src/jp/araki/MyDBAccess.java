@@ -36,6 +36,14 @@ public class MyDBAccess extends HttpServlet {
 		password = "keyport01";
 	}
 
+	// DBだけ違うとき用
+	public MyDBAccess(String url) {
+		driver = "com.mysql.jdbc.Driver";
+		this.url = url;
+		user = "root";
+		password = "keyport01";
+	}
+
 	// DB接続
 	public void open() throws Exception {
 		Class.forName(driver);
@@ -96,6 +104,17 @@ public class MyDBAccess extends HttpServlet {
 		}
 		return null;
 	}
+
+	// ユーザログイン処理SQL実施
+	public ResultSet getResultSetLogin(String id, String pass)	throws Exception {
+			sql = "SELECT * FROM login";
+			pstate = conn.prepareStatement(sql);
+			// ？に値を格納
+//			pstate.setString(1, id);
+//			pstate.setString(2, pass);
+			pstate.executeQuery();
+			return pstate.getResultSet();
+		}
 
 	// ユーザ削除処理SQL実施
 	public ResultSet getResultSetDel(String FIRST_NAME) throws Exception {
