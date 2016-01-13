@@ -18,6 +18,14 @@ h1 {
 <body>
 <%
 request.setCharacterEncoding("UTF-8");
+
+String login = (String)session.getAttribute("login");
+if (login == null || !login.equals("OK")){
+	//セッションなしで進んで来たら戻す
+	session.setAttribute("login", "NG");
+	response.sendRedirect("login.jsp");
+}
+
 String FIRST_NAME = request.getParameter("FIRST_NAME");
 String LAST_NAME = request.getParameter("LAST_NAME");
 

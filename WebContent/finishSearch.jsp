@@ -1,34 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ page import="java.sql.*,jp.araki.MyDBAccess,jp.araki.Escape"%>
-
+<%@ page import="java.sql.*,java.util.*,jp.start.*"%>
 <%
-
-	MyDBAccess db = new MyDBAccess();
-	Escape xss = new Escape();
-
-	String Search_NAME = request.getParameter("NAME");
-	String key = request.getParameter("key");
-	Search_NAME = xss.escapeXSS(Search_NAME);
-
-	db.open();
-	//SQL実施
-	ResultSet result = db.getResultSetSearch(Search_NAME,key);
-	int count=0;
-
-	String html = "<table width=0>";
-	while (result.next()) {
-		String FIRST_NAME = result.getString("FIRST_NAME");
-		String LAST_NAME = result.getString("LAST_NAME");
-		FIRST_NAME = xss.escapeXSS(FIRST_NAME);
-		LAST_NAME  = xss.escapeXSS(LAST_NAME);
-
-		html += "<tr><td>" + FIRST_NAME + " " + LAST_NAME + "</td>" + "</tr>";
-		count++;
-	}
-	html += "</table>";
-	db.close();
+	ArrayList<Str> result = (ArrayList<Str>)request.getAttribute("result");
 %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -45,15 +21,25 @@ h1 {
 </head>
 <body>
 	<h1>検索結果</h1>
-	<h2>【<%=Search_NAME %>】に該当するユーザは以下の通りです。</h2>
-	<%=html%>
-	<p><%=count %>名該当してました。</p>
+	<h2>【<%=request.getAttribute("NAME")%>】に該当するユーザは以下の通りです。</h2>
+	<table>
+	<%
+		for(Str res : result)
+			out.println("<tr>"+"<td>" + res.getFIRST_NAME() + " " +res.getLAST_NAME() + "</td></tr>");
+	%>
+	</table>
+	<p><%=request.getAttribute("count")%>名該当してました。</p>
 	<p>
 		<a href=searchName.jsp>再検索</a>
 	</p>
-	<p>
-		<a href=showName.jsp>Topに戻る</a>
-	</p>
+
+	<form action="./Start" method="GET" >
+		<table>
+			<tr>
+				<td><input type="submit" value="Topに戻る"></td>
+			</tr>
+		</table>
+	</form>
 	<hr>
 	<p>ここで検索も可能</p>
 		<form action="./SearchUser" method="POST">

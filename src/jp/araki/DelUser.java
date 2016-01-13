@@ -18,11 +18,11 @@ public class DelUser extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request,
-			HttpServletResponse responce) throws ServletException, IOException {
+			HttpServletResponse response) throws ServletException, IOException {
 	}
 
 	protected void doPost(HttpServletRequest request,
-			HttpServletResponse responce) throws ServletException, IOException {
+			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String FIRST_NAME = request.getParameter("FIRST_NAME");
 
@@ -41,7 +41,7 @@ public class DelUser extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		responce.sendRedirect("showName.jsp");
+		response.sendRedirect("showName.jsp");
 
 	}
 }

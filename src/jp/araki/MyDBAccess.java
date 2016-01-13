@@ -63,6 +63,17 @@ public class MyDBAccess extends HttpServlet {
 		state.execute(sql);
 	}
 
+	// ユーザログイン処理SQL実施
+	public ResultSet getResultSetLogin(String id, String pass)	throws Exception {
+			sql = "SELECT * FROM login WHERE ID = ? AND PASSWORD = ?";
+			pstate = conn.prepareStatement(sql);
+			// ？に値を格納
+			pstate.setString(1, id);
+			pstate.setString(2, pass);
+			pstate.executeQuery();
+			return pstate.getResultSet();
+		}
+
 	// ユーザ追加処理SQL実施
 	public ResultSet getResultSetAdd(String FIRST_NAME, String LAST_NAME) throws Exception {
 		sql = "insert into user (FIRST_NAME,LAST_NAME) values (?,?)";
@@ -105,16 +116,7 @@ public class MyDBAccess extends HttpServlet {
 		return null;
 	}
 
-	// ユーザログイン処理SQL実施
-	public ResultSet getResultSetLogin(String id, String pass)	throws Exception {
-			sql = "SELECT * FROM login";
-			pstate = conn.prepareStatement(sql);
-			// ？に値を格納
-//			pstate.setString(1, id);
-//			pstate.setString(2, pass);
-			pstate.executeQuery();
-			return pstate.getResultSet();
-		}
+
 
 	// ユーザ削除処理SQL実施
 	public ResultSet getResultSetDel(String FIRST_NAME) throws Exception {

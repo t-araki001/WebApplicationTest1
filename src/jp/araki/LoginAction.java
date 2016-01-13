@@ -1,6 +1,9 @@
 package jp.araki;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +15,8 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/LoginAction")
 public class LoginAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	protected Connection conn = null;
+	protected ResultSet rs = null;
 
 	public LoginAction() {
 		super();
@@ -29,31 +34,54 @@ public class LoginAction extends HttpServlet {
 		String id = request.getParameter("id");
 		String pass = request.getParameter("pass");
 
-		//とりあえず認証条件ほぼなし
-		boolean check = authUser(id, pass);
+		// SELECTで判断
+		boolean check = checkUser(id, pass);
 
-			if (check){
-				/* 認証済みにセット */
-				session.setAttribute("login", "OK");
-				session.setMaxInactiveInterval(3600);
-				/* 本来のアクセス先へ飛ばす */
-				response.sendRedirect("setName.jsp");
-			} else {
-				/* 認証に失敗したら、ログイン画面に戻す */
-				session.setAttribute("login", "false");
-				response.sendRedirect("login.jsp");
-			}
-
+		if (check) {
+			/* 認証済みにセット */
+			session.setAttribute("login", "OK");
+			/* セッション設定(60分) tomcat設定のため除外
+			session.setMaxInactiveInterval(3600);*/
+			/* 本来のアクセス先へ飛ばす */
+			response.sendRedirect("setName.jsp");
+		} else {
+			/* 認証に失敗したら、ログイン画面に戻す */
+			session.setAttribute("login", "ログイン失敗");
+			response.sendRedirect("login.jsp");
+		}
 
 	}
 
-	private boolean authUser(String id, String pass) {
-		//値がなければ返す
-		if(id == null || id.length() == 0 || pass == null || pass.length() == 0){
+	private boolean checkUser(String id, String pass) {
+		// 値がなければ返す
+		if (id == null || id.length() == 0 || pass == null || pass.length() == 0) {
 			return false;
 		}
 
-		return true;
+		try {
+			String url = "jdbc:mysql://localhost/login1";
+			MyDBAccess db = new MyDBAccess(url);
+			db.open();
+			// のSQL文実施
+			rs = db.getResultSetLogin(id, pass);
+
+			if (rs.next()) {
+				db.close();
+				return true;
+			} else {
+				db.close();
+				return false;
+			}
+		} catch (SQLException e) {
+			log("SQLException:" + e.getMessage());
+			return false;
+
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+			return false;
+		}
+
 	}
 
 }

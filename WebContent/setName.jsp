@@ -19,14 +19,14 @@ h1 {
 <%
 request.setCharacterEncoding("utf-8");
 String login = (String)session.getAttribute("login");
-String mes = null;
-	if (login != null && login.equals("OK")){
-  mes = "ようこそ";
+if (login == null || !login.equals("OK")){
+	//直接飛んできたらログインに返す
+	session.setAttribute("login", "ログインしないと利用できません");
+	response.sendRedirect("login.jsp");
 }
 %>
-
+<%=login %>
 	<h1>ユーザ登録</h1>
-	<p><%=mes %></p>
 	<h2>登録したい名字、名前をそれぞれ入力</h2>
 	<form action="./CheckName" method="POST" onsubmit="return check(this);">
 		<table>
@@ -43,9 +43,18 @@ String mes = null;
 				<td><input type="submit" value="登録"></td>
 			</tr>
 		</table>
+			<p><a href = showName.jsp>Topに戻る</a></p>
 	</form>
 	<hr>
 
+	<form action="./Logout" method="GET" onsubmit="return check2();">
+		<table>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="ログアウト"></td>
+			</tr>
+		</table>
+	</form>
 
 	<script type="text/javascript">
 		function check(chk) {
@@ -56,6 +65,13 @@ String mes = null;
 	            alert("名前が未入力です");
 	            return false;
 	        }
+		}
+
+		function check2(){
+			if(window.confirm('ログアウトしますよ？')){
+			}else{
+		        return false;
+			}
 		}
 	</script>
 </body>
