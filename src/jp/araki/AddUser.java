@@ -43,6 +43,12 @@ public class AddUser extends HttpServlet {
 				//INSERTのSQL文実施
 				db.getResultSetAdd(FIRST_NAME,LAST_NAME);
 				db.close();
+
+			    //サニタイジング
+				Escape xss = new Escape();
+				FIRST_NAME = xss.escapeXSS(FIRST_NAME);
+				LAST_NAME = xss.escapeXSS(LAST_NAME);
+
 				// 完了画面に登録者を受け渡し
 				request.setAttribute("FIRST_NAME", FIRST_NAME);
 				request.setAttribute("LAST_NAME", LAST_NAME);

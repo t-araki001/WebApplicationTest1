@@ -37,7 +37,7 @@ public class DelAll extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		responce.sendRedirect("showName.jsp");
+		responce.sendRedirect("Start");
 
 	}
 }

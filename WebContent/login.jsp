@@ -35,8 +35,7 @@ h1 {
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="submit" value="送信"><input type="reset"
-					value="リセット"></td>
+				<td><input type="submit" value="送信"><input type="reset" value="リセット"></td>
 			</tr>
 		</table><hr>
 	</form>

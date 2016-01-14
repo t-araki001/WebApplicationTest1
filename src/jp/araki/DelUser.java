@@ -41,7 +41,7 @@ public class DelUser extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		response.sendRedirect("showName.jsp");
+		response.sendRedirect("Start");
 
 	}
 }

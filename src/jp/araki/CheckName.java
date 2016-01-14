@@ -15,13 +15,30 @@ public class CheckName extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession();
+		String login = (String)session.getAttribute("login");
+		if (login == null || !login.equals("OK")){
+			//セッションなしで進んで来たら戻す
+			session.setAttribute("login", login);
+			response.sendRedirect("login.jsp");
+		}else{
+
+		//サニタイジング
+		Escape xss = new Escape();
+		String FIRST_NAME = request.getParameter("FIRST_NAME");
+		String LAST_NAME = request.getParameter("LAST_NAME");
+		FIRST_NAME = xss.escapeXSS(FIRST_NAME);
+		LAST_NAME = xss.escapeXSS(LAST_NAME);
+
+		request.setAttribute("FIRST_NAME",FIRST_NAME);
+		request.setAttribute("LAST_NAME",LAST_NAME);
+
 		// トークンをセッションに保存
 		session.setAttribute("token", session.getId());
 
 		getServletConfig().getServletContext()
 		.getRequestDispatcher("/checkName.jsp")
 		.forward(request, response);
-
+		}
 	}
 }

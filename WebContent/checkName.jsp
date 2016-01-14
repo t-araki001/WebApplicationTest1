@@ -17,23 +17,8 @@ h1 {
 </head>
 <body>
 <%
-request.setCharacterEncoding("UTF-8");
-
-String login = (String)session.getAttribute("login");
-if (login == null || !login.equals("OK")){
-	//セッションなしで進んで来たら戻す
-	session.setAttribute("login", "NG");
-	response.sendRedirect("login.jsp");
-}
-
-String FIRST_NAME = request.getParameter("FIRST_NAME");
-String LAST_NAME = request.getParameter("LAST_NAME");
-
-//サニタイジング
-Escape xss = new Escape();
-FIRST_NAME = xss.escapeXSS(FIRST_NAME);
-LAST_NAME = xss.escapeXSS(LAST_NAME);
-
+String FIRST_NAME = (String)request.getAttribute("FIRST_NAME");
+String LAST_NAME = (String)request.getAttribute("LAST_NAME");
 %>
 	<h1>登録内容確認</h1>
 	<h2>以下の内容で登録します</h2>
