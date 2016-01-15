@@ -16,21 +16,19 @@ h1 {
 </style>
 </head>
 <body>
-	<h1>ユーザ登録</h1>
-	<h2>登録したい名字、名前をそれぞれ入力</h2>
-	<form action="./CheckName" method="POST" onsubmit="return check(this);">
+	<h1>ユーザ削除</h1>
+	<h2>削除したい名字か名前をそれぞれ入力</h2>
+	<form action="./CheckNameDel" method="POST" onsubmit="return check(this);">
+		<p>
+		<input type="radio" name="key" value="1" checked>名字
+		<input type="radio" name="key" value="2"  >名前
+		</p>
 		<table>
 			<tr>
-				<td>名字：</td>
-				<td><input type="text" name=FIRST_NAME></td>
+				<td><input type="text" name=NAME></td>
 			</tr>
 			<tr>
-				<td>名前：</td>
-				<td><input type="text" name="LAST_NAME"></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="submit" value="登録"></td>
+				<td><input type="submit" value="削除"></td>
 			</tr>
 		</table>
 	</form>

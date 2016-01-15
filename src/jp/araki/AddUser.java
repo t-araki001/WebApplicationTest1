@@ -35,23 +35,23 @@ public class AddUser extends HttpServlet {
 		} else {
 			// DB登録
 			try {
-				String FIRST_NAME = request.getParameter("FIRST_NAME");
-				String LAST_NAME = request.getParameter("LAST_NAME");
+				String firstName = request.getParameter("FIRST_NAME");
+				String lastName = request.getParameter("LAST_NAME");
 
 				MyDBAccess db = new MyDBAccess();
 				db.open();
 				//INSERTのSQL文実施
-				db.getResultSetAdd(FIRST_NAME,LAST_NAME);
+				db.getResultSetAdd(firstName,lastName);
 				db.close();
 
 			    //サニタイジング
 				Escape xss = new Escape();
-				FIRST_NAME = xss.escapeXSS(FIRST_NAME);
-				LAST_NAME = xss.escapeXSS(LAST_NAME);
+				firstName = xss.escapeXSS(firstName);
+				lastName = xss.escapeXSS(lastName);
 
 				// 完了画面に登録者を受け渡し
-				request.setAttribute("FIRST_NAME", FIRST_NAME);
-				request.setAttribute("LAST_NAME", LAST_NAME);
+				request.setAttribute("FIRST_NAME", firstName);
+				request.setAttribute("LAST_NAME", lastName);
 
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();

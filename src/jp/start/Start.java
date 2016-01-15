@@ -42,12 +42,12 @@ public class Start extends HttpServlet {
 		ResultSet result = db.getResultSet("select * from user");
 		List<Str> list = new ArrayList<Str>();
 		while (result.next()) {
-			String FIRST_NAME = result.getString("FIRST_NAME");
-			String LAST_NAME = result.getString("LAST_NAME");
-			FIRST_NAME = xss.escapeXSS(FIRST_NAME);
-			LAST_NAME = xss.escapeXSS(LAST_NAME);
+			String firstName = result.getString("FIRST_NAME");
+			String lastName = result.getString("LAST_NAME");
+			firstName = xss.escapeXSS(firstName);
+			lastName = xss.escapeXSS(lastName);
 
-			list.add(new Str(FIRST_NAME,LAST_NAME));
+			list.add(new Str(firstName,lastName));
 		}
 		request.setAttribute("result", list);
 

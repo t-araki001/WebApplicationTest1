@@ -17,25 +17,21 @@ h1 {
 </head>
 <body>
 <%
-String firstName = (String)request.getAttribute("FIRST_NAME");
-String lastName = (String)request.getAttribute("LAST_NAME");
+String name = (String)request.getAttribute("NAME");
 %>
-	<h1>登録内容確認</h1>
-	<h2>以下の内容で登録します</h2>
-	<form action="./AddUser" method="POST">
+	<h1>削除内容確認</h1>
+	<h2>以下の内容で削除します</h2>
+	<form action="./DelUser" method="POST">
 		<table>
 			<tr>
-				<td>名字：<%=firstName %></td>
-				<td><input type="hidden" name="FIRST_NAME" value=<%=firstName %>></td>
-			</tr>
-			<tr>
-				<td>名前：<%=lastName %></td>
-				<td><input type="hidden" name="LAST_NAME" value=<%=lastName %>></td>
+				<td>対象：<%=name %></td>
+				<td><input type="hidden" name="NAME" value=<%=name %>></td>
 				<td><input type="hidden" name="token" value="<%=session.getAttribute("token") %>"></td>
+				<td><input type="hidden" name="key" value="<%=request.getParameter("key")%>"></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="submit" value="登録"></td>
+				<td><input type="submit" value="削除"></td>
 				<td><INPUT type="button" value="中止" onClick="history.back()">
 
 			</tr>

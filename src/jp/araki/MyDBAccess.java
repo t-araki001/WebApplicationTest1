@@ -119,13 +119,23 @@ public class MyDBAccess extends HttpServlet {
 
 
 	// ユーザ削除処理SQL実施
-	public ResultSet getResultSetDel(String FIRST_NAME) throws Exception {
+	public ResultSet getResultSetDel(String name,String key) throws Exception {
+	if (Integer.parseInt(key) == 1) {
 		sql = "delete from user where FIRST_NAME=?";
 		pstate = conn.prepareStatement(sql);
 		// ？に値を格納
-		pstate.setString(1, FIRST_NAME);
+		pstate.setString(1, name);
 		pstate.executeUpdate();
 		return pstate.getResultSet();
+	} else if (Integer.parseInt(key) == 2) {
+		sql = "delete from user where LAST_NAME=?";
+		pstate = conn.prepareStatement(sql);
+		// ？に値を格納
+		pstate.setString(1, name);
+		pstate.executeUpdate();
+		return pstate.getResultSet();
+	}
+	return null;
 	}
 
 	// DB閉鎖

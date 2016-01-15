@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/CheckName")
-public class CheckName extends HttpServlet {
+@WebServlet("/CheckNameDel")
+public class CheckNameDel extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -25,19 +25,16 @@ public class CheckName extends HttpServlet {
 
 			// サニタイジング
 			Escape xss = new Escape();
-			String firstName = request.getParameter("FIRST_NAME");
-			String lastName = request.getParameter("LAST_NAME");
-			firstName = xss.escapeXSS(firstName);
-			lastName = xss.escapeXSS(lastName);
+			String name = request.getParameter("NAME");
+			name = xss.escapeXSS(name);
 
-			request.setAttribute("FIRST_NAME", firstName);
-			request.setAttribute("LAST_NAME", lastName);
+			request.setAttribute("NAME", name);
 
 			// トークンをセッションに保存
 			session.setAttribute("token", session.getId());
 
 			getServletConfig().getServletContext()
-					.getRequestDispatcher("/checkName.jsp")
+					.getRequestDispatcher("/checkNameDel2.jsp")
 					.forward(request, response);
 		}
 	}

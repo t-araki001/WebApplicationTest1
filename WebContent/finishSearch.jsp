@@ -25,7 +25,7 @@ h1 {
 	<table>
 	<%
 		for(Str res : result)
-			out.println("<tr>"+"<td>" + res.getFIRST_NAME() + " " +res.getLAST_NAME() + "</td></tr>");
+			out.println("<tr>"+"<td>" + res.getFirstName() + " " +res.getLastName() + "</td></tr>");
 	%>
 	</table>
 	<p><%=request.getAttribute("count")%>名該当してました。</p>

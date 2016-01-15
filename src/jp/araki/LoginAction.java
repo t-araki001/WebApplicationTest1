@@ -43,7 +43,7 @@ public class LoginAction extends HttpServlet {
 			/* セッション設定(60分) tomcat設定のため除外
 			session.setMaxInactiveInterval(3600);*/
 			/* 本来のアクセス先へ飛ばす */
-			response.sendRedirect("setName.jsp");
+			response.sendRedirect("Start");
 		} else {
 			/* 認証に失敗したら、ログイン画面に戻す */
 			session.setAttribute("login", "ログイン失敗");

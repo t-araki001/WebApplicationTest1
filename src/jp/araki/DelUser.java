@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/DelUser")
 public class DelUser extends HttpServlet {
@@ -24,24 +25,30 @@ public class DelUser extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String FIRST_NAME = request.getParameter("FIRST_NAME");
 
-		try{
+		// トークンチェック(CSRF)
+		HttpSession session = request.getSession(true);
+		String token = (String) session.getAttribute("token");
+		if (token == null || !(token.equals(request.getParameter("token")))) {
+			// エラー画面へ
+			response.sendRedirect("error.jsp");
+		} else {
+			try {
+				String name = request.getParameter("NAME");
+				String key = request.getParameter("key");
 				MyDBAccess db = new MyDBAccess();
-				Escape xss = new Escape();
 				db.open();
-				FIRST_NAME = xss.escapeXSS(FIRST_NAME);
-				db.getResultSetDel(FIRST_NAME);
+				db.getResultSetDel(name, key);
 				db.close();
 
-		}catch(ClassNotFoundException e){
-			e.printStackTrace();
-		}catch(SQLException e){
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			response.sendRedirect("Start");
 		}
-		response.sendRedirect("Start");
-
 	}
 }

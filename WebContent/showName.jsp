@@ -28,32 +28,29 @@ h1 {
 	<table>
 	<%
 		for(Str res : result)
-			out.println("<tr>"+"<td>" + res.getFIRST_NAME() + " " +res.getLAST_NAME()+"さま"+"</td></tr>");
+			out.println("<tr>"+"<td>" + res.getFirstName() + " " +res.getLastName()+"さま"+"</td></tr>");
 	%>
 	</table>
-	<p>
-		※ユーザ追加を行う場合は<a href=setName.jsp>こちら</a>
-	</p>
-	<p>
-		※ユーザ検索を行う場合は<a href=searchName.jsp>こちら</a>
-	</p>
-	<hr>
 
+	<p></p>
+	※ユーザ追加を行う場合は↓
+	<form action="./LoginCheck" method="POST">
+		<input type="submit" value="登録">
+	</form>
 
-	<h2>ユーザ削除(掃除用。名字判定のみ)</h2>
-	<form action="./DelUser" method="POST">
-		<table>
-			<tr>
-				<td>名字：</td>
-				<td><input type="text" name="FIRST_NAME"></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="submit" value="送信"></td>
-			</tr>
-		</table>
+	<p></p>
+	※ユーザ検索を行う場合は↓
+	<form action="./searchName.jsp" method="POST">
+		<input type="submit" value="検索">
+	</form>
+
+	<p></p>
+	※ユーザ削除を行う場合は↓
+	<form action="./LoginCheckDel" method="POST">
+		<input type="submit" value="削除">
 	</form>
 	<hr>
+
 	<form action="./DelAll" method="POST" onsubmit="return check();">
 		<table>
 			<tr>

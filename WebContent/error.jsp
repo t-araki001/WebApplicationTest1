@@ -20,6 +20,12 @@ h1 {
 	<h1>エラー画面</h1>
 	<h2>画面遷移で異常がありました。。。。</h2>
 
-	<p><a href = showName.jsp>Topに戻る</a></p>
+	<form action="./Start" method="GET">
+		<table>
+			<tr>
+				<td><input type="submit" value="Topに戻る"></td>
+			</tr>
+		</table>
+	</form>
 </body>
 </html>
